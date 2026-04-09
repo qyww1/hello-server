@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/lab_db
+    username: postgres
+    password: 123456  # 替换为你PgAdmin中设置的真实密码

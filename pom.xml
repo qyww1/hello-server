@@ -6,30 +6,21 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.11</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
+
     <groupId>com.stu</groupId>
     <artifactId>hello-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>hello-server</name>
     <description>hello-server</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+
     <properties>
         <java.version>17</java.version>
     </properties>
+
     <dependencies>
+        <!-- 仅保留 Web 核心，无数据库、无 MyBatis-Plus -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -50,5 +41,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
