@@ -1,40 +1,57 @@
 package com.stu.helloserver.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.stu.helloserver.common.Result;
 import com.stu.helloserver.common.ResultCode;
 import com.stu.helloserver.dto.UserDTO;
+import com.stu.helloserver.entity.User;
+import com.stu.helloserver.mapper.UserMapper;
 import com.stu.helloserver.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.Map;
 
-@Service // 必须添加该注解，将业务类交给Spring容器管理
+@Service
 public class UserServiceImpl implements UserService {
-    // 暂时使用Map模拟数据库，下节课将在这里@Autowired注入UserMapper
-    private static final Map<String, String> userDb = new HashMap<>();
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Result<String> register(UserDTO userDTO) {
-        // 1. 校验用户是否已存在
-        if (userDb.containsKey(userDTO.getUsername())) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, userDTO.getUsername());
+        User dbUser = userMapper.selectOne(queryWrapper);
+
+        if (dbUser != null) {
             return Result.error(ResultCode.USER_HAS_EXISTED);
         }
-        // 2. 存入模拟数据库
-        userDb.put(userDTO.getUsername(), userDTO.getPassword());
+
+        User user = new User(userDTO.getUsername(), userDTO.getPassword());
+        userMapper.insert(user);
         return Result.success("注册成功");
     }
 
     @Override
     public Result<String> login(UserDTO userDTO) {
-        // 1. 校验用户是否存在
-        if (!userDb.containsKey(userDTO.getUsername())) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, userDTO.getUsername());
+        User dbUser = userMapper.selectOne(queryWrapper);
+
+        if (dbUser == null) {
             return Result.error(ResultCode.USER_NOT_EXIST);
         }
-        // 2. 校验密码是否正确
-        String dbPassword = userDb.get(userDTO.getUsername());
-        if (!dbPassword.equals(userDTO.getPassword())) {
+        if (!dbUser.getPassword().equals(userDTO.getPassword())) {
             return Result.error(ResultCode.PASSWORD_ERROR);
         }
         return Result.success("登录成功");
+    }
+
+    @Override
+    public Result<User> getUserById(Long id) {
+        User user = userMapper.selectById(id);
+        if (user == null) {
+            return Result.error(ResultCode.USER_NOT_EXIST);
+        }
+        return Result.success(user);
     }
 }

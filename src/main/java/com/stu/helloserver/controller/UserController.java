@@ -2,6 +2,7 @@ package com.stu.helloserver.controller;
 
 import com.stu.helloserver.common.Result;
 import com.stu.helloserver.dto.UserDTO;
+import com.stu.helloserver.entity.User;
 import com.stu.helloserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,21 +14,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // 1. 新增用户（注册）- 路径为POST /api/users
+    // 注册接口
     @PostMapping
     public Result<String> register(@RequestBody UserDTO userDTO) {
         return userService.register(userDTO);
     }
 
-    // 2. 用户登录 - 路径为POST /api/users/login
+    // 登录接口
     @PostMapping("/login")
     public Result<String> login(@RequestBody UserDTO userDTO) {
         return userService.login(userDTO);
     }
 
-    // 3. 获取用户信息（查）- 用于测试拦截器放行
+    // 根据ID查询用户
     @GetMapping("/{id}")
-    public Result<String> getUser(@PathVariable("id") Long id) {
-        return Result.success("查询成功，正在返回 ID 为 " + id + " 的用户信息");
+    public Result<User> getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 }
