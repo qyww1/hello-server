@@ -9,6 +9,19 @@ spring:
       maximum-pool-size: 20
       idle-timeout: 30000
       connection-timeout: 20000
+  # Redis配置
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+      timeout: 5000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: 10000ms
 
 mybatis-plus:
   configuration:
