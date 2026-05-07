@@ -1,21 +1,10 @@
 package com.stu.helloserver.config;
 
-import com.stu.helloserver.interceptor.AuthInterceptor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthInterceptor())
-                .addPathPatterns("/api/**")
-                .excludePathPatterns(
-                        "/api/users/login",
-                        "/api/users"
-
-                );
-    }
+    // 旧鉴权拦截器已迁移至Spring Security
+    // 此文件保留用于其他MVC配置
 }
