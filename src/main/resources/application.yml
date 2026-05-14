@@ -30,3 +30,9 @@ mybatis-plus:
 
 server:
   port: 8081 # 更改端口，避免冲突
+
+# JWT配置
+security:
+  jwt:
+    secret: demo-jwt-secret-key-for-spring-security-2026
+    expiration-millis: 7200000

@@ -11,6 +11,7 @@ import com.stu.helloserver.entity.User;
 import com.stu.helloserver.entity.UserInfo;
 import com.stu.helloserver.mapper.UserMapper;
 import com.stu.helloserver.mapper.UserInfoMapper;
+import com.stu.helloserver.security.JwtUtil;
 import com.stu.helloserver.service.UserService;
 import com.stu.helloserver.vo.UserDetailVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class UserServiceImpl implements UserService {
     private UserInfoMapper userInfoMapper;
     @Autowired
     private StringRedisTemplate redisTemplate;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public Result<String> register(UserDTO userDTO) {
@@ -59,7 +62,8 @@ public class UserServiceImpl implements UserService {
         if (!dbUser.getPassword().equals(userDTO.getPassword())) {
             return Result.error(ResultCode.PASSWORD_ERROR);
         }
-        return Result.success("登录成功");
+        String jwt = jwtUtil.generateToken(dbUser.getUsername());
+        return Result.success(jwt);
     }
 
     @Override
