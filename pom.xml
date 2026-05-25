@@ -26,6 +26,18 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
+
+            <repository>
+                <id>aliyun-public</id>
+                <url>https://maven.aliyun.com/repository/public</url>
+            </repository>
+            <repository>
+                <id>aliyun-dashscope</id>
+                <url>https://maven.aliyun.com/repository/aliyun-dashscope</url>
+            </repository>
+
+
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -113,6 +125,7 @@
             <version>0.12.6</version>
             <scope>runtime</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -128,6 +141,13 @@
                         </exclude>
                     </excludes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
