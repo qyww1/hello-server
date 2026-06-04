@@ -36,4 +36,4 @@ security:
     expiration-millis: 7200000
 
 dashscope:
-  api-key: ${AI_DASHSCOPE_API_KEY:}
+  api-key: ${DASHSCOPE_API_KEY:${AI_DASHSCOPE_API_KEY:${API_KEY:}}}
